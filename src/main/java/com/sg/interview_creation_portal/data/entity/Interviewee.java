@@ -1,19 +1,19 @@
-package com.sg.interview_creation_portal.entity;
+package com.sg.interview_creation_portal.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Interviewer {
+public class Interviewee {
 
     @Id
     @GeneratedValue
@@ -21,7 +21,8 @@ public class Interviewer {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
-    private String employeeCode;
+    private String resumeURL;
 }

@@ -1,4 +1,4 @@
-package com.sg.interview_creation_portal.entity;
+package com.sg.interview_creation_portal.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

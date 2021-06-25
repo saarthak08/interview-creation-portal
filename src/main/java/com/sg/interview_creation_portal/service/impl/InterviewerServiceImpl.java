@@ -1,6 +1,6 @@
 package com.sg.interview_creation_portal.service.impl;
 
-import com.sg.interview_creation_portal.entity.Interviewer;
+import com.sg.interview_creation_portal.data.entity.Interviewer;
 import com.sg.interview_creation_portal.exception.model.ExceptionType;
 import com.sg.interview_creation_portal.exception.model.GenericException;
 import com.sg.interview_creation_portal.repository.InterviewerRepository;

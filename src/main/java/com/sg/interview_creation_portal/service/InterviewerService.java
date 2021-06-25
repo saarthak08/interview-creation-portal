@@ -1,6 +1,6 @@
 package com.sg.interview_creation_portal.service;
 
-import com.sg.interview_creation_portal.entity.Interviewer;
+import com.sg.interview_creation_portal.data.entity.Interviewer;
 import com.sg.interview_creation_portal.exception.model.GenericException;
 
 import java.util.List;
