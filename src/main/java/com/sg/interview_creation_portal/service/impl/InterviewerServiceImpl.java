@@ -29,7 +29,7 @@ public class InterviewerServiceImpl implements InterviewerService {
     @Override
     public Interviewer getInterviewer(Long id) throws GenericException {
         Optional<Interviewer> interviewer = interviewerRepository.findById(id);
-        if(interviewer.isEmpty()) {
+        if (interviewer.isEmpty()) {
             throw new GenericException("Interviewer Not Found!", ExceptionType.NOT_FOUND_EXCEPTION);
         }
         return interviewer.get();

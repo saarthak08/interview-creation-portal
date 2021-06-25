@@ -1,7 +1,7 @@
 package com.sg.interview_creation_portal.controller;
 
 import com.sg.interview_creation_portal.exception.model.GenericException;
-import com.sg.interview_creation_portal.service.impl.InterviewerServiceImpl;
+import com.sg.interview_creation_portal.service.InterviewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/interviewer")
 public class InterviewerController {
 
-    private final InterviewerServiceImpl interviewerService;
+    private final InterviewerService interviewerService;
 
     @Autowired
-    public InterviewerController(InterviewerServiceImpl interviewerService) {
+    public InterviewerController(InterviewerService interviewerService) {
         this.interviewerService = interviewerService;
     }
 
