@@ -27,6 +27,6 @@ public class Interview {
     private Interviewee interviewee;
 
     @ManyToOne
-    @JoinColumn(name="interviewer")
+    @JoinColumn(name = "interviewer")
     private Interviewer interviewer;
 }
