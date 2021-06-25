@@ -1,13 +1,37 @@
-FROM adoptopenjdk:11-jre-hotspot as builder
-WORKDIR application
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
+#### Stage 1: Build the application
+FROM amazoncorretto:11-alpine-jdk as build
 
-FROM adoptopenjdk:11-jre-hotspot
-WORKDIR application
-COPY --from=builder application/dependencies/ ./
-COPY --from=builder application/spring-boot-loader ./
-COPY --from=builder application/snapshot-dependencies/ ./
-COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "com.sg.interview_creation_portal.InterviewCreationPortalApplication"]
+
+# Set the current working directory inside the image
+WORKDIR /interview-creation-portal
+
+# Copy maven executable to the image
+COPY mvnw .
+COPY .mvn .mvn
+
+# Copy the pom.xml file
+COPY pom.xml .
+
+# Build all the dependencies in preparation to go offline.
+# This is a separate step so the dependencies will be cached unless
+# the pom.xml file has changed.
+RUN ./mvnw dependency:go-offline -B
+
+# Copy the project source
+COPY src src
+
+# Package the application
+RUN ./mvnw package -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
+#### Stage 2: A minimal docker image with command to run the app
+FROM amazoncorretto:11-alpine-jdk
+
+ARG DEPENDENCY=/interview-creation-portal/target/dependency
+
+# Copy project dependencies from the build stage
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.sg.interview_creation_portal.InterviewCreationPortalApplication"]
