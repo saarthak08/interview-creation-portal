@@ -41,8 +41,16 @@ class Interview {
   Interview.fromJSON(Map<String, dynamic> map) {
     try {
       this._id = map["id"] ?? 0;
-      this._interviewer = Interviewer.fromJSON(map["interviewer"]);
-      this._interviewee = Interviewee.fromJSON(map["interviewee"]);
+      if (map["interviewer"] is Map<String, dynamic>) {
+        this._interviewer = Interviewer.fromJSON(map["interviewer"]);
+      } else {
+        this._interviewer = map["interviewer"];
+      }
+      if (map["interviewee"] is Map<String, dynamic>) {
+        this._interviewee = Interviewee.fromJSON(map["interviewee"]);
+      } else {
+        this._interviewee = map["interviewee"];
+      }
       this._startTime = map["startTiming"];
       this._endTime = map["endTiming"];
       this._date = map["date"];

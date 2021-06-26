@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_app/src/helper/theme.dart';
 import 'package:interview_app/src/screens/home_screen.dart';
+import 'package:interview_app/src/screens/splash_screen.dart';
 
 class App extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => HomeScreen(),
       },
-      initialRoute: '/home',
+      home: SplashScreen(),
     );
   }
 }

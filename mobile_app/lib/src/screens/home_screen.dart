@@ -16,16 +16,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   var vpH, vpW;
   ValueNotifier<List<Interview>> interviews =
       ValueNotifier<List<Interview>>([]);
 
-  void fetchInterviews() async {
-    interviewRepository.getInterviews().then((res) {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      refreshIndicatorKey.currentState?.show();
+    });
+  }
+
+  Future<void> fetchInterviews() async {
+    await interviewRepository.getInterviews().then((res) {
+      List<dynamic> interviewList = [];
       jsonDecode(res.body).forEach((ele) {
-        print(ele);
-        interviews.value = List.from([])..add(Interview.fromJSON(ele));
+        interviewList.add(Interview.fromJSON(ele));
       });
+      interviews.value = List.from(interviewList);
     });
   }
 
@@ -33,12 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     vpH = getViewportHeight(context);
     vpW = getViewportWidth(context);
-    fetchInterviews();
 
     interviews.value.sort((a, b) => a.startTime.compareTo(b.startTime));
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        body: SingleChildScrollView(
+      child: RefreshIndicator(
+        key: refreshIndicatorKey,
+        color: Colors.blue,
+        onRefresh: () {
+          return fetchInterviews();
+        },
         child: Stack(
           children: [
             ValueListenableBuilder(
@@ -53,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   interviews.value.length == 0
                       ? Center(
                           child: Container(
-                            height: vpW * 0.7,
+                            height: vpH * 0.7,
                             width: vpW * 0.6,
                             child: Column(
                               children: [
@@ -76,10 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       : ListView.builder(
                           itemCount: interviews.value.length,
                           primary: false,
+                          physics: BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Interview interview = interviews.value[index];
-                            return InterviewCard(interview: interview);
+                            return InterviewCard(
+                                interview: interview,
+                                refreshIndicatorKey: refreshIndicatorKey);
                           },
                         ),
                 ],
@@ -106,12 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "Interview Schedules",
+                      "Interviews",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: getViewportHeight(context) * 0.04,
-                        fontFamily: "Ubuntu",
-                      ),
+                          color: Colors.white,
+                          fontSize: getViewportHeight(context) * 0.05,
+                          fontFamily: "Pacifico"),
                     ),
                   ],
                 ),
@@ -125,14 +143,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Center(
                     child: FloatingActionButton(
-                      splashColor: Colors.red,
+                      splashColor: Colors.blue,
                       backgroundColor: Colors.white,
                       elevation: 5,
                       child: Icon(Icons.add,
                           size: getViewportHeight(context) * 0.05,
                           color: Theme.of(context).primaryColor),
-                      onPressed: () {
-                        showCreateInterviewDialog(context);
+                      onPressed: () async {
+                        await showCreateInterviewDialog(context: context);
+                        refreshIndicatorKey.currentState?.show();
                       },
                     ),
                   ),
@@ -142,6 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

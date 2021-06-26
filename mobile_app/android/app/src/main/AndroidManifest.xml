@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.interview_app">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="interview_app"
+        android:label="ICP"
         android:icon="@mipmap/ic_launcher">
+    
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

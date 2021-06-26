@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -24,13 +24,20 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.21.0+1
   http: ^0.13.3
   intl: ^0.17.0
+  date_time_picker: ^2.0.0
+  fluttertoast: ^8.0.7
+  file_picker: ^3.0.1
+  url_launcher: ^6.0.7
+
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -46,10 +53,16 @@ flutter:
   assets:
     - assets/img/
 
-  # fonts:
-    # - family: Mulish
-    #   fonts:
-    #     - asset: assets/fonts/Mulish.ttf
-    # - family: Pacifico
-    #   fonts:
-    #     - asset: assets/fonts/Pacifico.ttf
+  fonts:
+    - family: Mulish
+      fonts:
+        - asset: assets/fonts/Mulish.ttf
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico.ttf
+    - family: Nuntino Sans
+      fonts:
+        - asset: assets/fonts/NunitoSans.ttf
+    - family: Averia Serif Libre
+      fonts:
+        - asset: assets/fonts/AveriaSerifLibre.ttf

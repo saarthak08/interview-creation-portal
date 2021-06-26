@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart';
 
 import 'package:interview_app/src/repository/network_config.dart';
@@ -9,6 +10,9 @@ class _InterviewRepository {
   Future<Response> getInterviews() async {
     return await _client.get(
       Uri.parse('$baseURL/interview/all'),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
     );
   }
 
@@ -22,6 +26,9 @@ class _InterviewRepository {
         'interviewerId': interviewerId,
         'intervieweeId': intervieweeId
       }),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
     );
   }
 
@@ -36,6 +43,9 @@ class _InterviewRepository {
         'intervieweeId': intervieweeId,
         'id': id
       }),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
     );
   }
 
@@ -49,6 +59,18 @@ class _InterviewRepository {
         'interviewerId': interviewerId,
         'intervieweeId': intervieweeId,
       }),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
+    );
+  }
+
+  Future<Response> delete(int id) async {
+    return await _client.delete(
+      Uri.parse('$baseURL/interview/$id'),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
     );
   }
 }

@@ -16,7 +16,7 @@ class SelectInterviewer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           CircleAvatar(
-            backgroundColor: isActive ? Colors.red : Colors.black,
+            backgroundColor: isActive ? Colors.blue : Colors.black,
             backgroundImage:
                 NetworkImage("https://img.icons8.com/bubbles/2x/user-male.png"),
             radius: isActive ? 35 : 30,
