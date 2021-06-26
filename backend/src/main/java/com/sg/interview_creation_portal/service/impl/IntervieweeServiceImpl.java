@@ -34,5 +34,10 @@ public class IntervieweeServiceImpl implements IntervieweeService {
         }
         return interviewee.get();
     }
+
+    @Override
+    public void save(Interviewee interviewee) {
+        intervieweeRepository.save(interviewee);
+    }
 }
 

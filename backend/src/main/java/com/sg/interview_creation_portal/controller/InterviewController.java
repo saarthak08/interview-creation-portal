@@ -2,7 +2,10 @@ package com.sg.interview_creation_portal.controller;
 
 import com.sg.interview_creation_portal.data.dto.InterviewDTO;
 import com.sg.interview_creation_portal.exception.model.GenericException;
+import com.sg.interview_creation_portal.service.FileStorageService;
 import com.sg.interview_creation_portal.service.InterviewService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,12 @@ import javax.validation.Valid;
 public class InterviewController {
 
     private final InterviewService interviewService;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public InterviewController(InterviewService interviewService) {
+    public InterviewController(InterviewService interviewService, FileStorageService fileStorageService) {
         this.interviewService = interviewService;
+        this.fileStorageService = fileStorageService;
     }
 
     @PostMapping("/")

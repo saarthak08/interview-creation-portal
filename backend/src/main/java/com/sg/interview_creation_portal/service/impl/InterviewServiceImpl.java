@@ -9,12 +9,14 @@ import com.sg.interview_creation_portal.data.entity.Interviewer;
 import com.sg.interview_creation_portal.exception.model.ExceptionType;
 import com.sg.interview_creation_portal.exception.model.GenericException;
 import com.sg.interview_creation_portal.repository.InterviewRepository;
+import com.sg.interview_creation_portal.repository.IntervieweeRepository;
+import com.sg.interview_creation_portal.service.FileStorageService;
 import com.sg.interview_creation_portal.service.InterviewService;
 import com.sg.interview_creation_portal.service.IntervieweeService;
 import com.sg.interview_creation_portal.service.InterviewerService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,12 +28,16 @@ public class InterviewServiceImpl implements InterviewService {
 
     private final InterviewerService interviewerService;
     private final IntervieweeService intervieweeService;
+    private final FileStorageService fileStorageService;
+    private final IntervieweeRepository intervieweeRepository;
     private final InterviewRepository interviewRepository;
 
     @Autowired
-    public InterviewServiceImpl(InterviewerService interviewerService, IntervieweeService intervieweeService, InterviewRepository interviewRepository) {
+    public InterviewServiceImpl(InterviewerService interviewerService, IntervieweeService intervieweeService, FileStorageService fileStorageService, IntervieweeRepository intervieweeRepository, InterviewRepository interviewRepository) {
         this.interviewerService = interviewerService;
         this.intervieweeService = intervieweeService;
+        this.fileStorageService = fileStorageService;
+        this.intervieweeRepository = intervieweeRepository;
         this.interviewRepository = interviewRepository;
     }
 

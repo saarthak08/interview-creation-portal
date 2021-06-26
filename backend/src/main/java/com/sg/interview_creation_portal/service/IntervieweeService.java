@@ -9,4 +9,6 @@ public interface IntervieweeService {
     List<Interviewee> getAllInterviewees();
 
     Interviewee getInterviewee(Long id) throws GenericException;
+
+    void save(Interviewee interviewee);
 }
