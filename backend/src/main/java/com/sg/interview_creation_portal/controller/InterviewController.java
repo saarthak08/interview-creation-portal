@@ -43,6 +43,7 @@ public class InterviewController {
         return new ResponseEntity<>("Interview Modified", HttpStatus.OK);
     }
 
+    @PostMapping("/check")
     public ResponseEntity<?> checkInterviewAvailability(@RequestBody @Valid InterviewDTO interviewDTO) throws GenericException {
         return new ResponseEntity<>(interviewService.checkAvailability(interviewDTO), HttpStatus.OK);
     }
