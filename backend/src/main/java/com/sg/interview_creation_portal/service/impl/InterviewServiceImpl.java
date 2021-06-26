@@ -133,4 +133,10 @@ public class InterviewServiceImpl implements InterviewService {
     public List<Interview> getAllInterviews() {
         return interviewRepository.findAll();
     }
+
+    @Override
+    public void deleteInterview(Long id) throws GenericException {
+        Interview interview = getInterview(id);
+        interviewRepository.delete(interview);
+    }
 }

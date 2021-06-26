@@ -69,7 +69,7 @@ public class InterviewDTO {
         }
 
         if ((hourDifference == 1)
-                && (Integer.parseInt(endTimeString.substring(3)) != Integer.parseInt(startTimeString.substring(3)))) {
+                && (Integer.parseInt(endTimeString.substring(3)) >= Integer.parseInt(startTimeString.substring(3)))) {
             return false;
         }
 

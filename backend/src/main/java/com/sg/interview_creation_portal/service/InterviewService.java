@@ -16,4 +16,6 @@ public interface InterviewService {
     Interview getInterview(Long id) throws GenericException;
 
     List<Interview> getAllInterviews();
+
+    void deleteInterview(Long id) throws GenericException;
 }

@@ -47,4 +47,10 @@ public class InterviewController {
     public ResponseEntity<?> checkInterviewAvailability(@RequestBody @Valid InterviewDTO interviewDTO) throws GenericException {
         return new ResponseEntity<>(interviewService.checkAvailability(interviewDTO), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteInterview(@PathVariable Long id) throws GenericException {
+        interviewService.deleteInterview(id);
+        return new ResponseEntity<>("Interview Deleted",HttpStatus.OK);
+    }
 }
