@@ -6,9 +6,9 @@ import com.sg.interview_creation_portal.data.entity.Interviewer;
 
 public final class InterviewBuilder {
     private Long id;
-    private Long Date;
-    private String startTiming;
-    private String endTiming;
+    private String date;
+    private Long startTiming;
+    private Long endTiming;
     private Interviewee interviewee;
     private Interviewer interviewer;
 
@@ -24,17 +24,17 @@ public final class InterviewBuilder {
         return this;
     }
 
-    public InterviewBuilder setDate(Long Date) {
-        this.Date = Date;
+    public InterviewBuilder setDate(String date) {
+        this.date = date;
         return this;
     }
 
-    public InterviewBuilder setStartTiming(String startTiming) {
+    public InterviewBuilder setStartTiming(Long startTiming) {
         this.startTiming = startTiming;
         return this;
     }
 
-    public InterviewBuilder setEndTiming(String endTiming) {
+    public InterviewBuilder setEndTiming(Long endTiming) {
         this.endTiming = endTiming;
         return this;
     }
@@ -52,7 +52,7 @@ public final class InterviewBuilder {
     public Interview build() {
         Interview interview = new Interview();
         interview.setId(id);
-        interview.setDate(Date);
+        interview.setDate(date);
         interview.setStartTiming(startTiming);
         interview.setEndTiming(endTiming);
         interview.setInterviewee(interviewee);

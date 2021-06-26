@@ -13,14 +13,14 @@ import javax.persistence.*;
 public class Interview {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long Date;
+    private String date;
 
-    private String startTiming;
+    private Long startTiming;
 
-    private String endTiming;
+    private Long endTiming;
 
     @ManyToOne
     @JoinColumn(name = "interviewee")

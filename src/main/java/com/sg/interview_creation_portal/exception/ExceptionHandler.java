@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -38,7 +39,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         StringBuilder details = new StringBuilder("");
         for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-            details.append(error.getDefaultMessage()).append(" ");
+            details.append(error.getDefaultMessage()).append(", ");
         }
         ErrorResponse error = new ErrorResponse("Error! Validation Failed", details.toString());
         logger.error(ex.getMessage());
