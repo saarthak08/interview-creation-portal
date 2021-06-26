@@ -2,12 +2,12 @@ import 'package:interview_app/src/models/interviewee.dart';
 import 'package:interview_app/src/models/interviewer.dart';
 
 class Interview {
-  String _id = "";
+  int _id = 0;
   String _date = "";
   Interviewee _interviewee = Interviewee.empty();
   Interviewer _interviewer = Interviewer.empty();
-  int _startTime = 0;
-  int _endTime = 0;
+  int _startTime = 1624690372;
+  int _endTime = 1624690392;
   String _duration = "";
 
   get id => this._id;
@@ -40,11 +40,11 @@ class Interview {
 
   Interview.fromJSON(Map<String, dynamic> map) {
     try {
-      this._id = map["id"];
+      this._id = map["id"] ?? 0;
       this._interviewer = Interviewer.fromJSON(map["interviewer"]);
       this._interviewee = Interviewee.fromJSON(map["interviewee"]);
-      this._startTime = map["startTime"];
-      this._endTime = map["endTime"];
+      this._startTime = map["startTiming"];
+      this._endTime = map["endTiming"];
       this._date = map["date"];
     } catch (err) {
       print("Error in parsing JSON to Interview Object: " + err.toString());
