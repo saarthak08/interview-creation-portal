@@ -54,7 +54,7 @@ public class InterviewServiceImpl implements InterviewService {
                     .build();
             interviewRepository.save(interview);
         } else {
-            if (checkInterviewAvailability(interviews, interviewDTO.getStartTiming(), interviewDTO.getEndTiming())) {
+            if (checkInterviewAvailability(interviews, interviewDTO.getStartTiming(), interviewDTO.getEndTiming(),interviewDTO.getId())) {
                 Interview interview = InterviewBuilder.anInterview()
                         .setDate(startDateString)
                         .setStartTiming(interviewDTO.getStartTiming())
@@ -81,12 +81,12 @@ public class InterviewServiceImpl implements InterviewService {
         if (interviews == null || interviews.isEmpty()) {
             return true;
         } else {
-            return checkInterviewAvailability(interviews, interviewDTO.getStartTiming(), interviewDTO.getEndTiming());
+            return checkInterviewAvailability(interviews, interviewDTO.getStartTiming(), interviewDTO.getEndTiming(),interviewDTO.getId());
         }
     }
 
 
-    private boolean checkInterviewAvailability(List<Interview> interviews, Long startTiming, Long endTiming) {
+    private boolean checkInterviewAvailability(List<Interview> interviews, Long startTiming, Long endTiming,Long id) {
         SimpleDateFormat timeFormat = new SimpleDateFormat(DateTimeFormat.timeFormat);
         Date startTime = new Date(startTiming);
         String interviewStartTimeString = timeFormat.format(startTime);
@@ -94,17 +94,23 @@ public class InterviewServiceImpl implements InterviewService {
         Date endTime = new Date(endTiming);
         String interviewEndTimeString = timeFormat.format(endTime);
         for (Interview interview : interviews) {
-            startTime = new Date(interview.getStartTiming());
-            String startTimeString = timeFormat.format(startTime);
-            endTime = new Date(interview.getEndTiming());
-            String endTimeString = timeFormat.format(endTime);
-            final int hourDifference = Integer.parseInt(endTimeString.substring(0, 2)) - Integer.parseInt(interviewStartTimeString.substring(0, 2));
-            if ((hourDifference == 1)) {
-                return false;
-            }
-            if ((hourDifference == 2)
-                    && (Integer.parseInt(endTimeString.substring(3)) - Integer.parseInt(startTimeString.substring(3))) != 0) {
-                return false;
+            if(!interview.getId().equals(id)) {
+                startTime = new Date(interview.getStartTiming());
+                String startTimeString = timeFormat.format(startTime);
+                endTime = new Date(interview.getEndTiming());
+                String endTimeString = timeFormat.format(endTime);
+                final int hourDifferenceEndListFirstTime = Integer.parseInt(endTimeString.substring(0, 2)) - Integer.parseInt(interviewStartTimeString.substring(0, 2));
+                final int minuteDifferenceEndListFirstTime = Integer.parseInt(endTimeString.substring(3)) - Integer.parseInt(interviewStartTimeString.substring(3));
+
+                final int hourDifferenceFirstListEndTime = Integer.parseInt(startTimeString.substring(0, 2)) - Integer.parseInt(interviewEndTimeString.substring(0, 2));
+                final int minuteDifferenceFirstListEndTime = Integer.parseInt(startTimeString.substring(3)) - Integer.parseInt(interviewEndTimeString.substring(3));
+
+                if (hourDifferenceEndListFirstTime < 0 || (hourDifferenceEndListFirstTime == 0 && minuteDifferenceEndListFirstTime < 0)
+                        || hourDifferenceFirstListEndTime > 0 || (hourDifferenceFirstListEndTime == 0 && minuteDifferenceFirstListEndTime > 0)) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         return true;

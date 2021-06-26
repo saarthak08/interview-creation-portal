@@ -9,6 +9,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -46,30 +47,45 @@ public class InterviewDTO {
         Date endTime = new Date(this.endTiming);
         String endTimeString = timeFormat.format(endTime);
 
+        long time=System.currentTimeMillis();
+        Date currentDate = new Date(time);
+        String currDateString=dateFormat.format(currentDate);
+
         try {
             startDate = dateFormat.parse(startDateString);
             endDate = dateFormat.parse(endDateString);
             startTime = timeFormat.parse(startTimeString);
             endTime = timeFormat.parse(endTimeString);
+            currentDate=dateFormat.parse(currDateString);
 
         } catch (ParseException e) {
-            return false;
-        }
-        if (startDate.compareTo(new Date()) < 0) {
+            System.out.println("hi1");
+
             return false;
         }
 
-        if (endDate.compareTo(new Date()) < 0 || (endDate.compareTo(startDate) != 0)) {
+        if (startDate.compareTo(currentDate) < 0) {
+            System.out.println("hi2");
+            return false;
+        }
+
+        if (endDate.compareTo(currentDate) < 0 || (endDate.compareTo(startDate) != 0)) {
+            System.out.println("hi3");
+
             return false;
         }
 
         final int hourDifference = Integer.parseInt(endTimeString.substring(0, 2)) - Integer.parseInt(startTimeString.substring(0, 2));
         if (endTime.compareTo(startTime) <= 0 || (hourDifference < 1)) {
+            System.out.println("hi4");
+
             return false;
         }
 
         if ((hourDifference == 1)
-                && (Integer.parseInt(endTimeString.substring(3)) >= Integer.parseInt(startTimeString.substring(3)))) {
+                && (Integer.parseInt(endTimeString.substring(3)) < Integer.parseInt(startTimeString.substring(3)))) {
+            System.out.println("hi5");
+
             return false;
         }
 
