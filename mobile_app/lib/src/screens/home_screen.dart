@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:interview_app/src/dialogs/create_interview.dart';
 import 'package:interview_app/src/helper/dimensions.dart';
 import 'package:interview_app/src/helper/dummy_data.dart';
-import 'package:interview_app/src/models/interview_model.dart';
+import 'package:interview_app/src/models/interview.dart';
 import 'package:interview_app/src/widgets/interview_card.dart';
 
 class HomeScreen extends StatefulWidget {

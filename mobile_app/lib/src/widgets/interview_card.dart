@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interview_app/src/helper/dimensions.dart';
-import 'package:interview_app/src/models/interview_model.dart';
+import 'package:interview_app/src/models/interview.dart';
 
 class InterviewCard extends StatelessWidget {
   final Interview interview;

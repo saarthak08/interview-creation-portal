@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_app/src/helper/dimensions.dart';
 import 'package:interview_app/src/helper/dummy_data.dart';
-import 'package:interview_app/src/models/interview_model.dart';
+import 'package:interview_app/src/models/interview.dart';
 import 'package:interview_app/src/models/user.dart';
 import 'package:interview_app/src/widgets/select_participant.dart';
 
