@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InterviewRepository extends JpaRepository<Interview,Long> {
+public interface InterviewRepository extends JpaRepository<Interview, Long> {
     List<Interview> findByDateAndInterviewer(String date, Interviewer interviewer);
 }

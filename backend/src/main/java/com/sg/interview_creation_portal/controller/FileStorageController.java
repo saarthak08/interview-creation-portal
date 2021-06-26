@@ -30,7 +30,7 @@ public class FileStorageController {
 
     @PostMapping("/upload/{id}")
     public UploadFileResponseDTO uploadFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws GenericException {
-        return fileStorageService.storeFile(file,id);
+        return fileStorageService.storeFile(file, id);
     }
 
     @GetMapping("/download/{fileName:.+}")

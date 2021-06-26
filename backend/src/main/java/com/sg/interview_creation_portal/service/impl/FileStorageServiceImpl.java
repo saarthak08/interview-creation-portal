@@ -43,17 +43,17 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public UploadFileResponseDTO storeFile(MultipartFile file, Long id) throws GenericException {
-        Interviewee interviewee=intervieweeService.getInterviewee(id);
+        Interviewee interviewee = intervieweeService.getInterviewee(id);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
-            if(fileName.contains("..")) {
-                throw new GenericException("Sorry! Filename contains invalid path sequence " + fileName,ExceptionType.FILE_STORAGE_EXCEPTION);
+            if (fileName.contains("..")) {
+                throw new GenericException("Sorry! Filename contains invalid path sequence " + fileName, ExceptionType.FILE_STORAGE_EXCEPTION);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException | GenericException ex) {
-            throw new GenericException("Could not store file " + fileName + ". Please try again!",ExceptionType.FILE_STORAGE_EXCEPTION);
+            throw new GenericException("Could not store file " + fileName + ". Please try again!", ExceptionType.FILE_STORAGE_EXCEPTION);
         }
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -71,13 +71,13 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
-                throw new GenericException("File not found " + fileName,ExceptionType.FILE_NOT_FOUND_EXCEPTION);
+                throw new GenericException("File not found " + fileName, ExceptionType.FILE_NOT_FOUND_EXCEPTION);
             }
         } catch (MalformedURLException | GenericException ex) {
-            throw new GenericException("File not found " + fileName+ex.getMessage(),ExceptionType.FILE_NOT_FOUND_EXCEPTION);
+            throw new GenericException("File not found " + fileName + ex.getMessage(), ExceptionType.FILE_NOT_FOUND_EXCEPTION);
         }
     }
 

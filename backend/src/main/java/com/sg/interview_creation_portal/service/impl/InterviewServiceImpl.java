@@ -9,8 +9,6 @@ import com.sg.interview_creation_portal.data.entity.Interviewer;
 import com.sg.interview_creation_portal.exception.model.ExceptionType;
 import com.sg.interview_creation_portal.exception.model.GenericException;
 import com.sg.interview_creation_portal.repository.InterviewRepository;
-import com.sg.interview_creation_portal.repository.IntervieweeRepository;
-import com.sg.interview_creation_portal.service.FileStorageService;
 import com.sg.interview_creation_portal.service.InterviewService;
 import com.sg.interview_creation_portal.service.IntervieweeService;
 import com.sg.interview_creation_portal.service.InterviewerService;
@@ -28,16 +26,12 @@ public class InterviewServiceImpl implements InterviewService {
 
     private final InterviewerService interviewerService;
     private final IntervieweeService intervieweeService;
-    private final FileStorageService fileStorageService;
-    private final IntervieweeRepository intervieweeRepository;
     private final InterviewRepository interviewRepository;
 
     @Autowired
-    public InterviewServiceImpl(InterviewerService interviewerService, IntervieweeService intervieweeService, FileStorageService fileStorageService, IntervieweeRepository intervieweeRepository, InterviewRepository interviewRepository) {
+    public InterviewServiceImpl(InterviewerService interviewerService, IntervieweeService intervieweeService, InterviewRepository interviewRepository) {
         this.interviewerService = interviewerService;
         this.intervieweeService = intervieweeService;
-        this.fileStorageService = fileStorageService;
-        this.intervieweeRepository = intervieweeRepository;
         this.interviewRepository = interviewRepository;
     }
 
@@ -99,15 +93,11 @@ public class InterviewServiceImpl implements InterviewService {
 
         Date endTime = new Date(endTiming);
         String interviewEndTimeString = timeFormat.format(endTime);
-        System.out.println(interviewStartTimeString);
-        System.out.println(interviewEndTimeString);
         for (Interview interview : interviews) {
             startTime = new Date(interview.getStartTiming());
             String startTimeString = timeFormat.format(startTime);
             endTime = new Date(interview.getEndTiming());
             String endTimeString = timeFormat.format(endTime);
-            System.out.println(startTimeString);
-            System.out.println(endTimeString);
             final int hourDifference = Integer.parseInt(endTimeString.substring(0, 2)) - Integer.parseInt(interviewStartTimeString.substring(0, 2));
             if ((hourDifference == 1)) {
                 return false;
