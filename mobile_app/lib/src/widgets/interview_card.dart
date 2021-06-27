@@ -30,17 +30,15 @@ class InterviewCard extends StatelessWidget {
     return Card(
         elevation: 5,
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-        child: ListTile(
-          horizontalTitleGap: 8,
-          contentPadding: EdgeInsets.symmetric(
+        child: ExpansionTile(
+          childrenPadding: EdgeInsets.symmetric(
             horizontal: 8,
             vertical: 5,
           ),
-          onTap: () async {
-            await showCreateInterviewDialog(
-                context: context, interview: interview);
-            refreshIndicatorKey.currentState?.show();
-          },
+          tilePadding: EdgeInsets.symmetric(
+            horizontal: 8,
+            vertical: 5,
+          ),
           leading: Icon(
             Icons.timelapse_rounded,
             size: vpW * 0.08,
@@ -95,21 +93,83 @@ class InterviewCard extends StatelessWidget {
             Text(parseTimestamp(interview.startTime) +
                 " - " +
                 parseTimestamp(interview.endTime)),
-            interview.interviewee.resumeURL.toString().isNotEmpty
-                ? ElevatedButton(
-                    onPressed: () async {
-                      String _url = interview.interviewee.resumeURL.toString();
-                      await canLaunch(_url)
-                          ? await launch(_url)
-                          : throw 'Could not launch $_url';
-                    },
-                    child: Text('Download Resume'))
-                : Container()
           ]),
-          trailing: Icon(
-            Icons.edit,
-            size: vpW * 0.08,
-          ),
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+                text: TextSpan(
+                    text: "Interviewer Email: ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getViewportHeight(context) * 0.02,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                  TextSpan(
+                    text: interview.interviewer.email,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getViewportHeight(context) * 0.02,
+                        fontWeight: FontWeight.normal),
+                  )
+                ])),
+            SizedBox(
+              height: vpW * 0.01,
+            ),
+            RichText(
+                text: TextSpan(
+                    text: "Interviewee Email: ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getViewportHeight(context) * 0.02,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                  TextSpan(
+                    text: interview.interviewee.email,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: getViewportHeight(context) * 0.02,
+                        fontWeight: FontWeight.normal),
+                  )
+                ])),
+            SizedBox(
+              height: vpW * 0.02,
+            ),
+            Container(
+                margin: EdgeInsets.only(right: vpW * 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    interview.interviewee.resumeURL.toString().isNotEmpty
+                        ? OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(color: Colors.blue))),
+                              side: MaterialStateProperty.all(
+                                  BorderSide(color: Colors.blue)),
+                            ),
+                            onPressed: () async {
+                              String _url =
+                                  interview.interviewee.resumeURL.toString();
+                              await canLaunch(_url)
+                                  ? await launch(_url)
+                                  : throw 'Could not launch $_url';
+                            },
+                            child: Text('Download Resume'))
+                        : Container(),
+                    SizedBox(width: vpW * 0.04),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await showCreateInterviewDialog(
+                            context: context, interview: interview);
+                        refreshIndicatorKey.currentState?.show();
+                      },
+                      child: Text('Edit'),
+                    ),
+                  ],
+                )),
+          ],
         ));
   }
 }
