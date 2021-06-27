@@ -49,26 +49,17 @@ public class InterviewDTO {
         Date endTime = new Date(this.endTiming);
         String endTimeString = timeFormat.format(endTime);
 
-        Instant instant=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant();
-        Date currentDate=Date.from(instant);
-        String currDateString=dateFormat.format(currentDate);
-
         try {
             startDate = dateFormat.parse(startDateString);
             endDate = dateFormat.parse(endDateString);
             startTime = timeFormat.parse(startTimeString);
             endTime = timeFormat.parse(endTimeString);
-            currentDate=dateFormat.parse(currDateString);
 
         } catch (ParseException e) {
             return false;
         }
 
-        if (startDate.compareTo(currentDate) < 0) {
-            return false;
-        }
-
-        if (endDate.compareTo(currentDate) < 0 || (endDate.compareTo(startDate) != 0)) {
+        if ((endDate.compareTo(startDate) != 0)) {
             return false;
         }
 
