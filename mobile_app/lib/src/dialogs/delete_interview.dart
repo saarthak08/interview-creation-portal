@@ -37,7 +37,8 @@ Future<void> showDeleteInterviewDialog(context, int id) {
                     Fluttertoast.showToast(msg: errorBody["details"]);
                   }
                   if (res.statusCode == 200) {
-                    Navigator.of(context).pop();
+                    Navigator.of(context, rootNavigator: true).pop('dialog');
+                    Navigator.of(context, rootNavigator: true).pop('dialog');
                   }
                 }),
             TextButton(

@@ -395,7 +395,6 @@ Future<void> showCreateInterviewDialog(
                     if (isEndTimeChanged) {
                       endTiming = now;
                     }
-                    print(parseTimestamp(startTiming));
                     currInterview["startTiming"] = startTiming
                         .add(Duration(
                           hours: startHour,

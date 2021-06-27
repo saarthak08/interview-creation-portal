@@ -8,7 +8,6 @@ class _InterviewerRepository {
   Client _client = Client();
 
   Future<Response> getInterviewers() async {
-    print("getInterviewers func is called in network");
     return await _client.get(
       Uri.parse('$baseURL/interviewer/all'),
       headers: {
