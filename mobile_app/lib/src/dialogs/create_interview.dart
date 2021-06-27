@@ -46,10 +46,19 @@ Future<void> showCreateInterviewDialog(
   DateTime endTiming = interview != null
       ? DateTime.fromMillisecondsSinceEpoch(interview.endTime)
       : now;
-  int startHour = 0;
-  int endHour = 0;
-  int startMin = 0;
-  int endMin = 0;
+  int startHour = interview != null
+      ? int.parse(parseTime(interview.startTime).toString().substring(0, 2))
+      : 0;
+  int endHour = interview != null
+      ? int.parse(parseTime(interview.endTime).toString().substring(0, 2))
+      : 0;
+  int startMin = interview != null
+      ? int.parse(parseTime(interview.startTime).toString().substring(3, 5))
+      : 0;
+  int endMin = interview != null
+      ? int.parse(parseTime(interview.endTime).toString().substring(3, 5))
+      : 0;
+  bool isDateSelected = false;
   bool isStartTimeChanged = false;
   bool isEndTimeChanged = false;
   bool isLoading = false;
@@ -297,6 +306,7 @@ Future<void> showCreateInterviewDialog(
                       onChanged: (val) => setState(() {
                         startTiming = DateTime.parse(val);
                         endTiming = startTiming;
+                        isDateSelected = true;
                       }),
                       validator: (val) {
                         return null;
@@ -389,12 +399,15 @@ Future<void> showCreateInterviewDialog(
                           msg: "Please select an interviewer");
                       return;
                     }
-                    if (isStartTimeChanged) {
-                      startTiming = now;
+                    if (!isDateSelected) {
+                      if (isStartTimeChanged) {
+                        startTiming = now;
+                      }
+                      if (isEndTimeChanged) {
+                        endTiming = now;
+                      }
                     }
-                    if (isEndTimeChanged) {
-                      endTiming = now;
-                    }
+
                     currInterview["startTiming"] = startTiming
                         .add(Duration(
                           hours: startHour,
@@ -407,6 +420,25 @@ Future<void> showCreateInterviewDialog(
                           minutes: endMin,
                         ))
                         .millisecondsSinceEpoch;
+                    if (DateTime.fromMillisecondsSinceEpoch(
+                            currInterview["startTiming"])
+                        .isBefore(DateTime.now())) {
+                      Fluttertoast.showToast(
+                          msg: "startTime should be a present time");
+                    }
+                    if (DateTime.fromMillisecondsSinceEpoch(
+                            currInterview["endTiming"])
+                        .isBefore(DateTime.now())) {
+                      Fluttertoast.showToast(
+                          msg: "endTime should be a present time");
+                    }
+                    if (DateTime.fromMillisecondsSinceEpoch(
+                            currInterview["endTiming"])
+                        .isBefore(DateTime.fromMillisecondsSinceEpoch(
+                            currInterview["startTiming"]))) {
+                      Fluttertoast.showToast(
+                          msg: "endTime should be more than startTime");
+                    }
                     if (resumeFile != null) {
                       setState(() {
                         isLoading = true;

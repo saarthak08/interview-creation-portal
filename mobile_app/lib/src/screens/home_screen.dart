@@ -47,13 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     interviews.value.sort((a, b) => a.startTime.compareTo(b.startTime));
     return Scaffold(
-        body: SingleChildScrollView(
-      child: RefreshIndicator(
-        key: refreshIndicatorKey,
-        color: Colors.blue,
-        onRefresh: () {
-          return fetchInterviews();
-        },
+        body: RefreshIndicator(
+      key: refreshIndicatorKey,
+      color: Colors.blue,
+      onRefresh: () {
+        return fetchInterviews();
+      },
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Stack(
           children: [
             ValueListenableBuilder(
@@ -89,10 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         )
                       : ListView.builder(
+                          padding: EdgeInsets.symmetric(vertical: vpH * 0.05),
                           itemCount: interviews.value.length,
                           primary: false,
-                          physics: BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Interview interview = interviews.value[index];
