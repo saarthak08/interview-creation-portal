@@ -447,16 +447,11 @@ Future<void> showCreateInterviewDialog(
                       setState(() {
                         isLoading = false;
                       });
-                      if (res.statusCode == 400) {
-                        Map<String, dynamic> errorBody = jsonDecode(res.body);
-                        Fluttertoast.showToast(msg: errorBody["details"]);
-                      }
-                      if (res.statusCode == 208) {
-                        Map<String, dynamic> errorBody = jsonDecode(res.body);
-                        Fluttertoast.showToast(msg: errorBody["details"]);
-                      }
                       if (res.statusCode == 200) {
                         Navigator.of(context).pop();
+                      } else {
+                        Map<String, dynamic> errorBody = jsonDecode(res.body);
+                        Fluttertoast.showToast(msg: errorBody["details"]);
                       }
                     } else {
                       Interview interview = Interview.fromJSON(currInterview);
@@ -473,16 +468,11 @@ Future<void> showCreateInterviewDialog(
                       setState(() {
                         isLoading = false;
                       });
-                      if (res.statusCode == 400) {
-                        Map<String, dynamic> errorBody = jsonDecode(res.body);
-                        Fluttertoast.showToast(msg: errorBody["details"]);
-                      }
-                      if (res.statusCode == 208) {
-                        Map<String, dynamic> errorBody = jsonDecode(res.body);
-                        Fluttertoast.showToast(msg: errorBody["details"]);
-                      }
                       if (res.statusCode == 200) {
                         Navigator.of(context).pop();
+                      } else {
+                        Map<String, dynamic> errorBody = jsonDecode(res.body);
+                        Fluttertoast.showToast(msg: errorBody["details"]);
                       }
                     }
                   },
